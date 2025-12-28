@@ -1,10 +1,10 @@
-# Sistema de Onboarding - TI
+# Sistema de Onboarding - Frontend
 
-Aplicativo para acompanhamento do processo de onboarding de colaboradores em empresas de TI.
+Interface web para acompanhamento do processo de onboarding de colaboradores em empresas de TI.
 
 ## 📋 Sobre o Projeto
 
-Sistema desenvolvido como trabalho final do curso de Fullstack, que auxilia empresas de TI a gerenciar e acompanhar o onboarding de novos colaboradores do time técnico (Desenvolvedores, QAs e Product Owners).
+Frontend do sistema desenvolvido como trabalho final do curso de Fullstack, que auxilia empresas de TI a gerenciar e acompanhar o onboarding de novos colaboradores do time técnico (Desenvolvedores, QAs e Product Owners).
 
 ## 🎯 Funcionalidades
 
@@ -19,103 +19,103 @@ Sistema desenvolvido como trabalho final do curso de Fullstack, que auxilia empr
 - Visualizar lista de tarefas do próprio onboarding
 - Marcar tarefas como concluídas ou pendentes
 
-## 🏗️ Arquitetura
+## 🛠️ Tecnologias Utilizadas
 
-### Frontend
-- **React** - Interface do usuário
-- **Tailwind CSS** - Estilização
-- **React Router** - Navegação entre páginas
-
-### Backend
-- **Node.js** - Servidor API REST
-- **Express** - Framework web
-- **JSON** - Armazenamento de dados (arquivo local)
-
-## 📊 Estrutura de Dados
-
-### Templates de Onboarding
-Cada papel possui um template pré-definido de tarefas:
-- **Dev**: Configurar conta Git, setup ambiente local, revisar padrões de código, etc.
-- **QA**: Configurar ferramentas de teste, entender pipeline CI/CD, etc.
-- **PO**: Conhecer roadmap, alinhar com stakeholders, etc.
-
-### Status de Tarefas
-- **Pendente**: tarefa não concluída
-- **Concluído**: tarefa finalizada
+- React
+- Tailwind CSS
+- React Router
+- JavaScript (ES6+)
+- HTML5
+- CSS3
 
 ## 🚀 Como Executar
 
-### Frontend
 ```bash
-cd frontend
+# Instalar dependências
 npm install
+
+# Executar em modo de desenvolvimento
 npm run dev
+
+# Build para produção
+npm run build
 ```
-
-### Backend
-```bash
-cd backend
-npm install
-npm start
-```
-
-## 🛠️ Tecnologias Utilizadas
-
-- HTML5
-- CSS3
-- JavaScript (ES6+)
-- React
-- Tailwind CSS
-- Node.js
-
-## 📝 Regras de Negócio
-
-1. Gestor cadastra colaborador e escolhe o papel
-2. Sistema aplica template de tarefas automaticamente baseado no papel
-3. Gestor pode adicionar tarefas customizadas, mas não pode editar ou remover tarefas do template
-4. Colaborador visualiza apenas suas próprias tarefas
-5. Tarefas são organizadas em lista linear (sem dependências)
-6. Autenticação simplificada por tipo de usuário
-
-## 👥 Tipos de Usuário
-
-- **Gestor**: gerencia colaboradores e acompanha progresso
-- **Colaborador**: executa e marca tarefas como concluídas
-  - Dev (Desenvolvedor)
-  - QA (Quality Assurance)
-  - PO (Product Owner)
 
 ## 📦 Estrutura do Projeto
 
 ```
-/
-├── frontend/
-│   ├── src/
-│   │   ├── pages/
-│   │   │   ├── Login.jsx
-│   │   │   ├── GestorDashboard.jsx
-│   │   │   └── ColaboradorTarefas.jsx
-│   │   ├── components/
-│   │   └── data/
-│   │       └── mockData.js
-│   └── package.json
-├── backend/
-│   ├── data/
-│   │   └── data.json
-│   ├── routes/
-│   └── package.json
-└── README.md
+src/
+├── pages/
+│   ├── Login.jsx
+│   ├── GestorDashboard.jsx
+│   ├── CadastroColaborador.jsx
+│   ├── DetalhesOnboarding.jsx
+│   └── ColaboradorTarefas.jsx
+├── components/
+│   └── (componentes reutilizáveis)
+├── data/
+│   └── mockData.js
+├── App.jsx
+└── main.jsx
 ```
+
+## 🎨 Páginas
+
+### Login
+- Formulário de autenticação
+- Diferencia entre gestor e colaborador
+
+### Dashboard Gestor
+- Lista de colaboradores em onboarding
+- Percentual de conclusão por colaborador
+- Acesso rápido aos detalhes
+
+### Cadastro de Colaborador
+- Formulário com nome, email e papel
+- Seleção entre Dev, QA ou PO
+
+### Detalhes do Onboarding
+- Lista completa de tarefas do colaborador
+- Adicionar tarefas customizadas
+- Visualização de progresso
+
+### Tarefas do Colaborador
+- Lista de tarefas próprias
+- Checkbox para marcar como concluído
+
+## 📝 Regras de Interface
+
+1. Gestor tem acesso a todas as funcionalidades de gestão
+2. Colaborador visualiza apenas sua própria lista de tarefas
+3. Templates são aplicados automaticamente ao cadastrar colaborador
+4. Tarefas do template não podem ser editadas ou removidas
+5. Interface responsiva para diferentes tamanhos de tela
+
+## 🔗 Integração com Backend
+
+Este frontend consome a API REST do backend através de requisições HTTP para:
+- Autenticação de usuários
+- Listagem e cadastro de colaboradores
+- Gerenciamento de tarefas
+- Atualização de status
+
+## 👥 Tipos de Usuário
+
+- **Gestor**: acessa dashboard e gerencia colaboradores
+- **Colaborador**: acessa lista de tarefas próprias
+  - Dev (Desenvolvedor)
+  - QA (Quality Assurance)
+  - PO (Product Owner)
 
 ## 🎓 Contexto Acadêmico
 
 Projeto desenvolvido como avaliação final do curso de Fullstack, aplicando os conhecimentos de:
-- Desenvolvimento frontend com React
+- Desenvolvimento de interfaces com React
 - Estilização com Tailwind CSS
-- Criação de APIs REST com Node.js
-- Manipulação de dados em JSON
-- Arquitetura de aplicações web
+- Gerenciamento de estado
+- Roteamento de páginas
+- Consumo de APIs REST
 
 ---
 
-**Desenvolvido como projeto final do curso de Fullstack**
+**Desenvolvido como projeto final do curso de Fullstack Essencial Atlântico Avanti - FB Uni**
