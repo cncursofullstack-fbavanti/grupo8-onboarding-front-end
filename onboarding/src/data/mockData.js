@@ -10,7 +10,7 @@ const data = {
     {
       id: 2,
       nome: "Cyclops",
-      email: "summer.scott@xmen.com",
+      email: "summers.scott@xmen.com",
       senha: "lookatmyeyes",
       tipo: "colaborador",
       papel: "dev"

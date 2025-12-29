@@ -1,13 +1,29 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { useNavigate } from 'react-router-dom';
 import Input from "../components/Input"
 import data from "../data/mockData";
 
 const Login = () => {
-  const [ email, setEmail ] = useState("");
-  const [ password, setPassword ] = useState("");
-  const [erro, setErro] = useState("")
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [erro, setErro] = useState("");
   const navigate = useNavigate();
+
+  const navigateLogin = (u) => {
+    if(u.tipo === 'gestor'){
+      navigate('/gestor/dashboard');
+    } else if(u.tipo === 'colaborador') {
+      navigate('/colaborador/tarefas');
+    }
+  }
+  // Verifica se já está logado quando o componente carrega
+  useEffect(() => {
+    const usuario = JSON.parse(localStorage.getItem('usuario'));
+    if(usuario) {
+      navigateLogin(usuario);
+    }
+  }, []); // [] significa que executa só uma vez ao montar
+
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -17,14 +33,10 @@ const Login = () => {
       setErro('Email ou senha incorretos');
       return;
     }
-
+    
     setErro('');
-    if(loggedUser.tipo === 'gestor'){
-      navigate('/gestor/dashboard');
-    } else if(loggedUser.tipo === 'colaborador') {
-      navigate('/colaborador/tarefas')
-    }
-
+    localStorage.setItem('usuario', JSON.stringify(loggedUser));
+    navigateLogin(loggedUser);
   }
 
   return (
