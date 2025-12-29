@@ -47,7 +47,7 @@ npm run build
 | Nome | Email | Senha | Tipo | Papel |
 |------|-------|-------|------|-------|
 | Professor X | xavier.charles@xmen.com | icanreadyourmind | Gestor | - |
-| Cyclops | summer.scott@xmen.com | lookatmyeyes | Colaborador | Dev |
+| Cyclops | summers.scott@xmen.com | lookatmyeyes | Colaborador | Dev |
 | Phoenix | grey.jean@xmen.com | icanreadyourmindaswellprofessor | Colaborador | PO |
 | Beast | mccoy.hank@xmen.com | minhasantquerupita | Colaborador | Dev |
 | Iceman | drake.robert@xmen.com | chillout | Colaborador | QA |

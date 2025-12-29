@@ -19,6 +19,7 @@ const Header = () => {
       <div className="max-w-7xl mx-auto px-4 py-4 flex justify-between items-center">
         <h1 className="text-xl font-bold text-gray-800">Sistema de Onboarding</h1>
         <div className="flex items-center gap-4">
+          <img src={usuario.avatar} alt="Avatar do Usuário" className='rounded-full w-10 h-10 border-2 border-gray-300' />
           <span className="text-gray-700">{usuario.nome}</span>
           <button 
             onClick={logout}

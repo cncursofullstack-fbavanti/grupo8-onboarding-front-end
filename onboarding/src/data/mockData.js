@@ -5,7 +5,8 @@ const data = {
       nome: "Professor X",
       email: "xavier.charles@xmen.com",
       senha: "icanreadyourmind",
-      tipo: "gestor"
+      tipo: "gestor",
+      avatar: "/src/assets/imgs/professor.png",
     },
     {
       id: 2,
@@ -13,7 +14,8 @@ const data = {
       email: "summers.scott@xmen.com",
       senha: "lookatmyeyes",
       tipo: "colaborador",
-      papel: "dev"
+      papel: "dev",
+      avatar: "/src/assets/imgs/cyclops.png",
     },
     {
       id: 3,
@@ -21,7 +23,8 @@ const data = {
       email: "grey.jean@xmen.com",
       senha: "icanreadyourmindaswellprofessor",
       tipo: "colaborador",
-      papel: "po"
+      papel: "po",
+      avatar: "/src/assets/imgs/phoenix.png",
     },
     {
       id: 4,
@@ -29,7 +32,8 @@ const data = {
       email: "mccoy.hank@xmen.com",
       senha: "minhasantquerupita",
       tipo: "colaborador",
-      papel: "dev"
+      papel: "dev",
+      avatar: "/src/assets/imgs/beast.png",
     },
     {
       id: 5,
@@ -37,7 +41,8 @@ const data = {
       email: "drake.robert@xmen.com",
       senha: "chillout",
       tipo: "colaborador",
-      papel: "qa"
+      papel: "qa",
+      avatar: "/src/assets/imgs/iceman.png",
     }
   ],
 
