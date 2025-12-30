@@ -4,34 +4,33 @@ import data from "../data/mockData";
 import Progress from "../components/Progress";
 
 const GestorDashBoard = () => {
-  const team = data.usuarios.filter((u) => u.tipo === "colaborador");
-  const tasks = data.tarefas;
+  const team = data.users.filter((u) => u.type === "collaborator"); // ❌ usuarios → users
+  const tasks = data.tasks; // ❌ tarefas → tasks
   const navigate = useNavigate();
-
+  
   const progress = (user) => {
-    const uTasks = tasks.filter((task) => user.id === task.colaborador_id);
-    const completed = uTasks.filter((task) => task.status === "concluido");
-
+    const uTasks = tasks.filter((task) => user.id === task.collaborator_id);
+    const completed = uTasks.filter((task) => task.status === "completed");
     return completed.length / uTasks.length;
   }
-
+  
   const progressoGeral = () => {
-    const totalTarefas = team.reduce((acc, colaborador) => {
-    const uTasks = tasks.filter(t => t.colaborador_id === colaborador.id);
-    return acc + uTasks.length;
-  }, 0);
+    const totalTarefas = team.reduce((acc, collaborator) => {
+      const uTasks = tasks.filter(t => t.collaborator_id === collaborator.id);
+      return acc + uTasks.length;
+    }, 0);
     
-  const tarefasConcluidas = team.reduce((acc, colaborador) => {
-      const uTasks = tasks.filter(t => t.colaborador_id === colaborador.id);
-      const completed = uTasks.filter(t => t.status === "concluido");
+    const tarefasConcluidas = team.reduce((acc, collaborator) => {
+      const uTasks = tasks.filter(t => t.collaborator_id === collaborator.id);
+      const completed = uTasks.filter(t => t.status === "completed");
       return acc + completed.length;
-  }, 0);
+    }, 0);
     
     return tarefasConcluidas / totalTarefas;
   }
-
+  
   const verDetalhes = (id) => {
-    navigate(`/gestor/onboarding/${id}`);
+    navigate(`/manager/onboarding/${id}`); // ❌ gestor → manager e faltava (
   }
   
   return (
@@ -40,47 +39,49 @@ const GestorDashBoard = () => {
       <div className="min-h-screen bg-stone-200 p-6">
         <div className="max-w-7xl mx-auto">
           <h2 className="text-3xl font-bold text-gray-800 mb-6">
-            Colaboradores em Onboarding
+            Collaborators Onboarding {/* ❌ collaboratores → Collaborators */}
           </h2>
-
+          
           {/* Progresso Geral */}
           <div className="bg-white rounded-lg shadow-md p-6 mb-6">
-            <h3 className="text-xl font-semibold text-gray-800 mb-4">Progresso Geral do Time</h3>
             <div className="flex items-center gap-4">
-              <div className="flex-1">
-                <Progress percentage={progressoGeral()} size="large" showLabel={false} />
-              </div>
-              <span className="text-2xl font-bold text-yellow-600">
+              <div className="w-37 text-6xl font-bold text-yellow-600 text-center">
                 {Math.round(progressoGeral() * 100)}%
-              </span>
+              </div>
+              <div className='flex-1'>
+                <h3 className="text-xl font-semibold text-gray-800">Team Overall Progress</h3>
+                <div className="flex-1">
+                  <Progress percentage={progressoGeral()} size="large" showLabel={false} />
+                </div>
+              </div>
             </div>
           </div>
-
+          
           {/* Grid de cards */}
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
-            {team.map((colaborador) => (
-              <div key={colaborador.id} className="bg-white rounded-lg shadow-md hover:shadow-lg transition-shadow">
+            {team.map((collaborator) => (
+              <div key={collaborator.id} className="bg-white rounded-lg shadow-md hover:shadow-lg transition-shadow">
                 <div className="flex items-center gap-4">
                   <img 
-                    src={colaborador.avatar} 
-                    alt={colaborador.nome}
+                    src={collaborator.avatar} 
+                    alt={collaborator.name} // ❌ nome → name
                     className="w-45 rounded-l-lg"
                   />
                   <div className="pr-6 flex-1">
                     <h3 className="text-lg font-semibold text-gray-800">
-                      {colaborador.nome} <span className='text-gray-400 text-sm uppercase'>{colaborador.papel}</span>
+                      {collaborator.name} <span className='text-gray-400 text-sm uppercase'>{collaborator.role}</span> {/* ❌ nome → name, papel → role */}
                     </h3>
                     <ul>
                       <li className="text-sm text-gray-500">
-                        {colaborador.email}
+                        {collaborator.email}
                       </li>
                     </ul>
-                    <Progress percentage={progress(colaborador)} />
+                    <Progress percentage={progress(collaborator)} />
                     <button 
                       className="mt-3 px-4 py-2 text-sm text-white bg-yellow-500 rounded-lg hover:bg-yellow-600"
-                      onClick={() => verDetalhes(colaborador.id)}
+                      onClick={() => verDetalhes(collaborator.id)}
                     >
-                      Ver Detalhes
+                      View Details
                     </button>
                   </div>
                 </div>

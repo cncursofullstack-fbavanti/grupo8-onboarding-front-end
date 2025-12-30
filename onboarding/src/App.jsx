@@ -12,10 +12,10 @@ function App() {
     <BrowserRouter>
       <Routes>
         <Route path="/" element={<Login />} />
-        <Route path="/gestor/dashboard" element={<GestorDashBoard />} />
-        <Route path="/gestor/cadastro" element={<CadastroColaborador />} />
-        <Route path="/gestor/onboarding/:id" element={<DetalhesOnboarding />} />
-        <Route path="/colaborador/tarefas" element={<ColaboradorTarefas />} />
+        <Route path="/manager/dashboard" element={<GestorDashBoard />} />
+        <Route path="/manager/assign" element={<CadastroColaborador />} />
+        <Route path="/manager/onboarding/:id" element={<DetalhesOnboarding />} />
+        <Route path="/collaborator/tasks" element={<ColaboradorTarefas />} />
       </Routes>
     </BrowserRouter>
   )

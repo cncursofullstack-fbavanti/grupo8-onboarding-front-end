@@ -2,32 +2,34 @@ import React, { useState, useEffect } from "react";
 import { useNavigate } from 'react-router-dom';
 import Input from "../components/Input"
 import data from "../data/mockData";
+import { getLoggedUser, setLoggedUser } from '../utils/auth';
+import logo from "../assets/imgs/SchoolLogo.png"
 
 const Login = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [erro, setErro] = useState("");
   const navigate = useNavigate();
-
+  
   const navigateLogin = (u) => {
-    if(u.tipo === 'gestor'){
-      navigate('/gestor/dashboard');
-    } else if(u.tipo === 'colaborador') {
-      navigate('/colaborador/tarefas');
+    if(u.type === 'manager'){
+      navigate('/manager/dashboard');
+    } else if(u.type === 'collaborator') {
+      navigate('/collaborator/tasks');
     }
   }
   // Verifica se já está logado quando o componente carrega
   useEffect(() => {
-    const usuario = JSON.parse(localStorage.getItem('usuario'));
-    if(usuario) {
-      navigateLogin(usuario);
+    const user = getLoggedUser();
+    if(user) {
+      navigateLogin(user);
     }
   }, []); // [] significa que executa só uma vez ao montar
 
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    const loggedUser = data.usuarios.find(d => d.email === email && d.senha === password);
+    const loggedUser = data.users.find(d => d.email === email && d.password === password);
     
     if(!loggedUser){
       setErro('Email ou senha incorretos');
@@ -35,13 +37,14 @@ const Login = () => {
     }
     
     setErro('');
-    localStorage.setItem('usuario', JSON.stringify(loggedUser));
+    setLoggedUser(loggedUser);
     navigateLogin(loggedUser);
   }
 
   return (
     <div className="flex items-center justify-center min-h-screen bg-stone-200">
       <div className="w-full max-w-md p-8 bg-white rounded-lg shadow-md">
+        <img src={logo} alt="Xavier's School for Gifted Youngsters" className='w-50 mx-auto mt-10 mb-15' />
         <h2 className="mb-6 text-2xl font-bold text-center text-gray-800">Login</h2>
 
         <form onSubmit={handleSubmit} className="space-y-4" autoComplete="on">

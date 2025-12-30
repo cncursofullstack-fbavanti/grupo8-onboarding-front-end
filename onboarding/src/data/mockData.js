@@ -1,117 +1,117 @@
 const data = {
-  usuarios: [
+  users: [
     {
       id: 1,
-      nome: "Professor X",
+      name: "Professor X",
       email: "xavier.charles@xmen.com",
-      senha: "icanreadyourmind",
-      tipo: "gestor",
-      avatar: "/src/assets/imgs/professor.png",
+      password: "icanreadyourmind",
+      type: "manager",
+      avatar: "/src/assets/imgs/professor.png"
     },
     {
       id: 2,
-      nome: "Cyclops",
+      name: "Cyclops",
       email: "summers.scott@xmen.com",
-      senha: "lookatmyeyes",
-      tipo: "colaborador",
-      papel: "dev",
-      avatar: "/src/assets/imgs/cyclops.png",
+      password: "lookatmyeyes",
+      type: "collaborator",
+      role: "dev",
+      avatar: "/src/assets/imgs/cyclops.png"
     },
     {
       id: 3,
-      nome: "Phoenix",
+      name: "Phoenix",
       email: "grey.jean@xmen.com",
-      senha: "icanreadyourmindaswellprofessor",
-      tipo: "colaborador",
-      papel: "po",
-      avatar: "/src/assets/imgs/phoenix.png",
+      password: "icanreadyourmindaswellprofessor",
+      type: "collaborator",
+      role: "po",
+      avatar: "/src/assets/imgs/phoenix.png"
     },
     {
       id: 4,
-      nome: "Beast",
+      name: "Beast",
       email: "mccoy.hank@xmen.com",
-      senha: "minhasantquerupita",
-      tipo: "colaborador",
-      papel: "dev",
-      avatar: "/src/assets/imgs/beast.png",
+      password: "minhasantquerupita",
+      type: "collaborator",
+      role: "dev",
+      avatar: "/src/assets/imgs/beast.png"
     },
     {
       id: 5,
-      nome: "Iceman",
+      name: "Iceman",
       email: "drake.robert@xmen.com",
-      senha: "chillout",
-      tipo: "colaborador",
-      papel: "qa",
-      avatar: "/src/assets/imgs/iceman.png",
+      password: "chillout",
+      type: "collaborator",
+      role: "qa",
+      avatar: "/src/assets/imgs/iceman.png"
     }
   ],
 
   templates: {
     dev: [
-      { id: 1, titulo: "Configurar conta do Git e SSH keys" },
-      { id: 2, titulo: "Instalar e configurar ambiente de desenvolvimento local" },
-      { id: 3, titulo: "Revisar documentação técnica do projeto" },
-      { id: 4, titulo: "Conhecer padrões de código e boas práticas da equipe" },
-      { id: 5, titulo: "Configurar acesso aos repositórios" },
-      { id: 6, titulo: "Fazer primeiro commit de teste" },
-      { id: 7, titulo: "Participar da daily com o time" }
+      { id: 1, title: "Configurar conta do Git e SSH keys" },
+      { id: 2, title: "Instalar e configurar ambiente de desenvolvimento local" },
+      { id: 3, title: "Revisar documentação técnica do projeto" },
+      { id: 4, title: "Conhecer padrões de código e boas práticas da equipe" },
+      { id: 5, title: "Configurar acesso aos repositórios" },
+      { id: 6, title: "Fazer primeiro commit de teste" },
+      { id: 7, title: "Participar da daily com o time" }
     ],
     qa: [
-      { id: 1, titulo: "Configurar ferramentas de teste (Selenium, Jest, etc)" },
-      { id: 2, titulo: "Conhecer o fluxo de testes da aplicação" },
-      { id: 3, titulo: "Entender pipeline de CI/CD" },
-      { id: 4, titulo: "Revisar casos de teste existentes" },
-      { id: 5, titulo: "Configurar ambiente de testes" },
-      { id: 6, titulo: "Executar suite de testes completa" },
-      { id: 7, titulo: "Participar da daily com o time" }
+      { id: 1, title: "Configurar ferramentas de teste (Selenium, Jest, etc)" },
+      { id: 2, title: "Conhecer o fluxo de testes da aplicação" },
+      { id: 3, title: "Entender pipeline de CI/CD" },
+      { id: 4, title: "Revisar casos de teste existentes" },
+      { id: 5, title: "Configurar ambiente de testes" },
+      { id: 6, title: "Executar suite de testes completa" },
+      { id: 7, title: "Participar da daily com o time" }
     ],
     po: [
-      { id: 1, titulo: "Conhecer roadmap do produto" },
-      { id: 2, titulo: "Alinhar expectativas com stakeholders" },
-      { id: 3, titulo: "Revisar backlog atual" },
-      { id: 4, titulo: "Entender métricas e KPIs do produto" },
-      { id: 5, titulo: "Conhecer o processo de discovery" },
-      { id: 6, titulo: "Participar de cerimônias ágeis (planning, review, retro)" },
-      { id: 7, titulo: "Fazer shadowing com PO anterior ou líder" }
+      { id: 1, title: "Conhecer roadmap do produto" },
+      { id: 2, title: "Alinhar expectativas com stakeholders" },
+      { id: 3, title: "Revisar backlog atual" },
+      { id: 4, title: "Entender métricas e KPIs do produto" },
+      { id: 5, title: "Conhecer o processo de discovery" },
+      { id: 6, title: "Participar de cerimônias ágeis (planning, review, retro)" },
+      { id: 7, title: "Fazer shadowing com PO anterior ou líder" }
     ]
   },
 
-  tarefas: [
-    // Tarefas do Cyclops (Dev - id: 2) - Todas concluídas
-    { id: 1, colaborador_id: 2, tarefa_template_id: 1, titulo: "Configurar conta do Git e SSH keys", status: "concluido" },
-    { id: 2, colaborador_id: 2, tarefa_template_id: 2, titulo: "Instalar e configurar ambiente de desenvolvimento local", status: "concluido" },
-    { id: 3, colaborador_id: 2, tarefa_template_id: 3, titulo: "Revisar documentação técnica do projeto", status: "concluido" },
-    { id: 4, colaborador_id: 2, tarefa_template_id: 4, titulo: "Conhecer padrões de código e boas práticas da equipe", status: "concluido" },
-    { id: 5, colaborador_id: 2, tarefa_template_id: 5, titulo: "Configurar acesso aos repositórios", status: "concluido" },
-    { id: 6, colaborador_id: 2, tarefa_template_id: 6, titulo: "Fazer primeiro commit de teste", status: "concluido" },
-    { id: 7, colaborador_id: 2, tarefa_template_id: 7, titulo: "Participar da daily com o time", status: "concluido" },
+  tasks: [
+    // Tasks for Cyclops (Dev - id: 2) - All completed
+    { id: 1, collaborator_id: 2, template_task_id: 1, title: "Configurar conta do Git e SSH keys", status: "completed" },
+    { id: 2, collaborator_id: 2, template_task_id: 2, title: "Instalar e configurar ambiente de desenvolvimento local", status: "completed" },
+    { id: 3, collaborator_id: 2, template_task_id: 3, title: "Revisar documentação técnica do projeto", status: "completed" },
+    { id: 4, collaborator_id: 2, template_task_id: 4, title: "Conhecer padrões de código e boas práticas da equipe", status: "completed" },
+    { id: 5, collaborator_id: 2, template_task_id: 5, title: "Configurar acesso aos repositórios", status: "completed" },
+    { id: 6, collaborator_id: 2, template_task_id: 6, title: "Fazer primeiro commit de teste", status: "completed" },
+    { id: 7, collaborator_id: 2, template_task_id: 7, title: "Participar da daily com o time", status: "completed" },
 
-    // Tarefas da Phoenix (PO - id: 3) - Parcialmente concluídas
-    { id: 8, colaborador_id: 3, tarefa_template_id: 1, titulo: "Conhecer roadmap do produto", status: "concluido" },
-    { id: 9, colaborador_id: 3, tarefa_template_id: 2, titulo: "Alinhar expectativas com stakeholders", status: "concluido" },
-    { id: 10, colaborador_id: 3, tarefa_template_id: 3, titulo: "Revisar backlog atual", status: "pendente" },
-    { id: 11, colaborador_id: 3, tarefa_template_id: 4, titulo: "Entender métricas e KPIs do produto", status: "concluido" },
-    { id: 12, colaborador_id: 3, tarefa_template_id: 5, titulo: "Conhecer o processo de discovery", status: "pendente" },
-    { id: 13, colaborador_id: 3, tarefa_template_id: 6, titulo: "Participar de cerimônias ágeis (planning, review, retro)", status: "pendente" },
-    { id: 14, colaborador_id: 3, tarefa_template_id: 7, titulo: "Fazer shadowing com PO anterior ou líder", status: "pendente" },
+    // Tasks for Phoenix (PO - id: 3) - Partially completed
+    { id: 8, collaborator_id: 3, template_task_id: 1, title: "Conhecer roadmap do produto", status: "completed" },
+    { id: 9, collaborator_id: 3, template_task_id: 2, title: "Alinhar expectativas com stakeholders", status: "completed" },
+    { id: 10, collaborator_id: 3, template_task_id: 3, title: "Revisar backlog atual", status: "pending" },
+    { id: 11, collaborator_id: 3, template_task_id: 4, title: "Entender métricas e KPIs do produto", status: "completed" },
+    { id: 12, collaborator_id: 3, template_task_id: 5, title: "Conhecer o processo de discovery", status: "pending" },
+    { id: 13, collaborator_id: 3, template_task_id: 6, title: "Participar de cerimônias ágeis (planning, review, retro)", status: "pending" },
+    { id: 14, collaborator_id: 3, template_task_id: 7, title: "Fazer shadowing com PO anterior ou líder", status: "pending" },
 
-    // Tarefas do Beast (Dev - id: 4) - Parcialmente concluídas
-    { id: 15, colaborador_id: 4, tarefa_template_id: 1, titulo: "Configurar conta do Git e SSH keys", status: "concluido" },
-    { id: 16, colaborador_id: 4, tarefa_template_id: 2, titulo: "Instalar e configurar ambiente de desenvolvimento local", status: "pendente" },
-    { id: 17, colaborador_id: 4, tarefa_template_id: 3, titulo: "Revisar documentação técnica do projeto", status: "concluido" },
-    { id: 18, colaborador_id: 4, tarefa_template_id: 4, titulo: "Conhecer padrões de código e boas práticas da equipe", status: "concluido" },
-    { id: 19, colaborador_id: 4, tarefa_template_id: 5, titulo: "Configurar acesso aos repositórios", status: "concluido" },
-    { id: 20, colaborador_id: 4, tarefa_template_id: 6, titulo: "Fazer primeiro commit de teste", status: "concluido" },
-    { id: 21, colaborador_id: 4, tarefa_template_id: 7, titulo: "Participar da daily com o time", status: "pendente" },
+    // Tasks for Beast (Dev - id: 4) - Partially completed
+    { id: 15, collaborator_id: 4, template_task_id: 1, title: "Configurar conta do Git e SSH keys", status: "completed" },
+    { id: 16, collaborator_id: 4, template_task_id: 2, title: "Instalar e configurar ambiente de desenvolvimento local", status: "pending" },
+    { id: 17, collaborator_id: 4, template_task_id: 3, title: "Revisar documentação técnica do projeto", status: "completed" },
+    { id: 18, collaborator_id: 4, template_task_id: 4, title: "Conhecer padrões de código e boas práticas da equipe", status: "completed" },
+    { id: 19, collaborator_id: 4, template_task_id: 5, title: "Configurar acesso aos repositórios", status: "completed" },
+    { id: 20, collaborator_id: 4, template_task_id: 6, title: "Fazer primeiro commit de teste", status: "completed" },
+    { id: 21, collaborator_id: 4, template_task_id: 7, title: "Participar da daily com o time", status: "pending" },
 
-    // Tarefas do Iceman (QA - id: 5) - Maioria pendente
-    { id: 22, colaborador_id: 5, tarefa_template_id: 1, titulo: "Configurar ferramentas de teste (Selenium, Jest, etc)", status: "concluido" },
-    { id: 23, colaborador_id: 5, tarefa_template_id: 2, titulo: "Conhecer o fluxo de testes da aplicação", status: "pendente" },
-    { id: 24, colaborador_id: 5, tarefa_template_id: 3, titulo: "Entender pipeline de CI/CD", status: "pendente" },
-    { id: 25, colaborador_id: 5, tarefa_template_id: 4, titulo: "Revisar casos de teste existentes", status: "pendente" },
-    { id: 26, colaborador_id: 5, tarefa_template_id: 5, titulo: "Configurar ambiente de testes", status: "pendente" },
-    { id: 27, colaborador_id: 5, tarefa_template_id: 6, titulo: "Executar suite de testes completa", status: "pendente" },
-    { id: 28, colaborador_id: 5, tarefa_template_id: 7, titulo: "Participar da daily com o time", status: "pendente" }
+    // Tasks for Iceman (QA - id: 5) - Mostly pending
+    { id: 22, collaborator_id: 5, template_task_id: 1, title: "Configurar ferramentas de teste (Selenium, Jest, etc)", status: "completed" },
+    { id: 23, collaborator_id: 5, template_task_id: 2, title: "Conhecer o fluxo de testes da aplicação", status: "pending" },
+    { id: 24, collaborator_id: 5, template_task_id: 3, title: "Entender pipeline de CI/CD", status: "pending" },
+    { id: 25, collaborator_id: 5, template_task_id: 4, title: "Revisar casos de teste existentes", status: "pending" },
+    { id: 26, collaborator_id: 5, template_task_id: 5, title: "Configurar ambiente de testes", status: "pending" },
+    { id: 27, collaborator_id: 5, template_task_id: 6, title: "Executar suite de testes completa", status: "pending" },
+    { id: 28, collaborator_id: 5, template_task_id: 7, title: "Participar da daily com o time", status: "pending" }
   ]
 }
 

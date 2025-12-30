@@ -1,5 +1,4 @@
 const Progress = ({ percentage, size = "small", showLabel = true }) => {
-  const heightClass = size === "large" ? "h-4" : "h-2";
   const textSize = size === "large" ? "text-base" : "text-xs";
   
   return (
@@ -12,9 +11,9 @@ const Progress = ({ percentage, size = "small", showLabel = true }) => {
           </span>
         </div>
       )}
-      <div className={`w-full bg-gray-200 rounded-full ${heightClass}`}>
+      <div className={`w-full bg-gray-200 rounded-full h-2`}>
         <div 
-          className={`bg-yellow-500 ${heightClass} rounded-full transition-all`}
+          className={`bg-yellow-500 h-2 rounded-full transition-all`}
           style={{ width: `${percentage * 100}%` }}
         ></div>
       </div>
