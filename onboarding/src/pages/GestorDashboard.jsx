@@ -4,8 +4,8 @@ import data from "../data/mockData";
 import Progress from "../components/Progress";
 
 const GestorDashBoard = () => {
-  const team = data.users.filter((u) => u.type === "collaborator"); // ❌ usuarios → users
-  const tasks = data.tasks; // ❌ tarefas → tasks
+  const team = data.users.filter((u) => u.type === "collaborator"); 
+  const tasks = data.tasks; 
   const navigate = useNavigate();
   
   const progress = (user) => {
@@ -15,22 +15,22 @@ const GestorDashBoard = () => {
   }
   
   const progressoGeral = () => {
-    const totalTarefas = team.reduce((acc, collaborator) => {
+    const totalTasks = team.reduce((acc, collaborator) => {
       const uTasks = tasks.filter(t => t.collaborator_id === collaborator.id);
       return acc + uTasks.length;
     }, 0);
     
-    const tarefasConcluidas = team.reduce((acc, collaborator) => {
+    const finishedTasks = team.reduce((acc, collaborator) => {
       const uTasks = tasks.filter(t => t.collaborator_id === collaborator.id);
       const completed = uTasks.filter(t => t.status === "completed");
       return acc + completed.length;
     }, 0);
     
-    return tarefasConcluidas / totalTarefas;
+    return finishedTasks / totalTasks;
   }
   
   const verDetalhes = (id) => {
-    navigate(`/manager/onboarding/${id}`); // ❌ gestor → manager e faltava (
+    navigate(`/manager/onboarding/${id}`); 
   }
   
   return (
@@ -39,7 +39,7 @@ const GestorDashBoard = () => {
       <div className="min-h-screen bg-stone-200 p-6">
         <div className="max-w-7xl mx-auto">
           <h2 className="text-3xl font-bold text-gray-800 mb-6">
-            Collaborators Onboarding {/* ❌ collaboratores → Collaborators */}
+            Onboarding do time
           </h2>
           
           {/* Progresso Geral */}

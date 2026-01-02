@@ -10,3 +10,29 @@ export const setLoggedUser = (user) => {
 export const logout = () => {
   localStorage.removeItem('user');
 }
+
+export const isManager = () => {
+  const user = getLoggedUser();
+  return user && user.type === 'manager';
+}
+
+export const isCollaborator = () => {
+  const user = getLoggedUser();
+  return user && user.type === 'collaborator';
+}
+
+export const requireManager = (navigate) => {
+  if (!isManager()) {
+    navigate('/');
+    return false;
+  }
+  return true;
+}
+
+export const requireCollaborator = (navigate) => {
+  if (!isCollaborator()) {
+    navigate('/');
+    return false;
+  }
+  return true;
+}

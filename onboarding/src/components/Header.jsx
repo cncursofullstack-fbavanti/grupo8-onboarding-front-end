@@ -1,3 +1,4 @@
+import { useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import logo from "../assets/imgs/SchoolLogo.png"
 import { getLoggedUser, logout } from '../utils/auth';
@@ -12,6 +13,12 @@ const Header = () => {
   }
   
   // Se não tiver usuário, não renderiza nada (ou redireciona)
+   useEffect(() => {
+    if(!user) {
+      navigate('/');
+    }
+  }, [user, navigate]);
+
   if(!user) {
     return null;
   }
