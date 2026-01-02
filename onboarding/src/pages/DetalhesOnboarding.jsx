@@ -1,13 +1,19 @@
+import { useEffect } from "react";
 import Header from "../components/Header";
 import Progress from "../components/Progress";
 import data from "../data/mockData"
 import { useParams, useNavigate } from "react-router-dom";
+import { requireManager } from "../utils/auth";
 
-const DetalhesOnboarding = () => { // ❌ Nome do componente estava errado
+const DetalhesOnboarding = () => {
   const params = useParams();
   const collab = data.users.find(u => u.id == params.id);
   const tasks = data.tasks.filter(t => t.collaborator_id === collab.id);
   const navigate = useNavigate();
+
+  useEffect(() => {
+    requireManager(navigate);
+  }, [navigate]);
   
   const progress = () => {
     const completed = tasks.filter(t => t.status === "completed");

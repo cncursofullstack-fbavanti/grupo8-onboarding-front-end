@@ -1,12 +1,18 @@
+import { useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import Header from "../components/Header";
 import data from "../data/mockData";
 import Progress from "../components/Progress";
+import { requireManager } from '../utils/auth';
 
 const GestorDashBoard = () => {
   const team = data.users.filter((u) => u.type === "collaborator"); 
   const tasks = data.tasks; 
   const navigate = useNavigate();
+
+  useEffect(() => {
+      requireManager(navigate);
+    }, [navigate]);
   
   const progress = (user) => {
     const uTasks = tasks.filter((task) => user.id === task.collaborator_id);
