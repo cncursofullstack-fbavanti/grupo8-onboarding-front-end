@@ -24,7 +24,7 @@ const Login = () => {
     if(user) {
       navigateLogin(user);
     }
-  }, []); // [] significa que executa só uma vez ao montar
+  }, []); 
 
 
   const handleSubmit = (e) => {
