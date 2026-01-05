@@ -5,6 +5,7 @@ import GestorDashBoard from './pages/GestorDashboard';
 import CadastroColaborador from './pages/CadastroColaborador'
 import DetalhesOnboarding from './pages/DetalhesOnboarding';
 import ColaboradorTarefas from './pages/ColaboradorTarefas';
+import NotFound from './pages/NotFound'
 
 
 function App() {
@@ -16,6 +17,9 @@ function App() {
         <Route path="/manager/assign" element={<CadastroColaborador />} />
         <Route path="/manager/onboarding/:id" element={<DetalhesOnboarding />} />
         <Route path="/collaborator/tasks" element={<ColaboradorTarefas />} />
+        
+        {/* 404 Route - it has to be the last one */}
+        <Route path="*" element={<NotFound />} />
       </Routes>
     </BrowserRouter>
   )
