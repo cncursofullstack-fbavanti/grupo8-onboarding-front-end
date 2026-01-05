@@ -43,6 +43,15 @@ const data = {
       type: "collaborator",
       role: "qa",
       avatar: "/src/assets/imgs/iceman.png"
+    },
+    {
+      id: 6,
+      name: "Storm",
+      email: "ororo@xmen.com",
+      password: "weather",
+      type: "collaborator",
+      role: "dev",
+      avatar: ""
     }
   ],
 

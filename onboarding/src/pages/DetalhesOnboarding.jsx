@@ -4,6 +4,7 @@ import Progress from "../components/Progress";
 import data from "../data/mockData"
 import { useParams, useNavigate } from "react-router-dom";
 import { requireManager } from "../utils/auth";
+import Avatar from "../components/Avatar";
 
 const DetalhesOnboarding = () => {
   const params = useParams();
@@ -40,11 +41,7 @@ const DetalhesOnboarding = () => {
           {/* Header do Colaborador com Progresso */}
           <div className="bg-white rounded-lg shadow-md hover:shadow-lg transition-shadow mb-6">
             <div className="flex items-center gap-4">
-              <img 
-                src={collab.avatar} 
-                alt={collab.name}
-                className="w-45 rounded-l-lg"
-              />
+              <Avatar src={collab.avatar} name={collab.name} size="card" />
               <div className="pr-6 flex-1">
                 <h3 className="text-lg font-semibold text-gray-800">
                   {collab.name} <span className='text-gray-400 text-sm uppercase'>{collab.role}</span>

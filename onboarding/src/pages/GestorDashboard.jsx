@@ -4,6 +4,7 @@ import Header from "../components/Header";
 import data from "../data/mockData";
 import Progress from "../components/Progress";
 import { requireManager } from '../utils/auth';
+import Avatar from '../components/Avatar';
 
 const GestorDashBoard = () => {
   const team = data.users.filter((u) => u.type === "collaborator"); 
@@ -68,14 +69,10 @@ const GestorDashBoard = () => {
             {team.map((collaborator) => (
               <div key={collaborator.id} className="bg-white rounded-lg shadow-md hover:shadow-lg transition-shadow">
                 <div className="flex items-center gap-4">
-                  <img 
-                    src={collaborator.avatar} 
-                    alt={collaborator.name} // ❌ nome → name
-                    className="w-45 rounded-l-lg"
-                  />
+                  <Avatar src={collaborator.avatar} name={collaborator.name} size="card" />
                   <div className="pr-6 flex-1">
                     <h3 className="text-lg font-semibold text-gray-800">
-                      {collaborator.name} <span className='text-gray-400 text-sm uppercase'>{collaborator.role}</span> {/* ❌ nome → name, papel → role */}
+                      {collaborator.name} <span className='text-gray-400 text-sm uppercase'>{collaborator.role}</span> 
                     </h3>
                     <ul>
                       <li className="text-sm text-gray-500">

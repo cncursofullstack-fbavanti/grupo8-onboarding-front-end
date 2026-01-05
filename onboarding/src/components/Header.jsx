@@ -1,8 +1,9 @@
 import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import logo from "../assets/imgs/SchoolLogo.png"
+import logo from "../assets/imgs/SchoolLogo.png";
 import { getLoggedUser, logout, isManager } from '../utils/auth'; 
-import { Menu, X, Home, UserPlus, LogOut, ListTodo } from 'lucide-react'
+import { Menu, X, Home, UserPlus, LogOut, ListTodo } from 'lucide-react';
+import Avatar from '../components/Avatar';
 
 const Header = () => {
   const user = getLoggedUser();
@@ -26,14 +27,14 @@ const Header = () => {
   
   return (
     <header className="bg-white shadow-sm border-b border-gray-200">
-      <div className="max-w-7xl mx-auto px-4 flex justify-between items-center relative"> {/* ❌ Adiciona relative */}
+      <div className="max-w-7xl mx-auto px-4 flex justify-between items-center relative">
         <div className='flex items-center gap-5'>
           <img src={logo} alt="Xavier's School for Gifted Youngsters" className='w-20' />
           <h1 className="text-xl font-bold text-gray-800">Sistema de Onboarding</h1>
         </div>
         
         <div className="flex items-center gap-4 relative">
-          <img src={user.avatar} alt="Avatar do Usuário" className='rounded-full w-10 h-10 border-2 border-gray-300' />
+          <Avatar src={user.avatar} name={user.name} size="md" />
           <span className="text-gray-700">{user.name}</span>
           <button 
             onClick={() => setMenuOpen(!menuOpen)}
@@ -41,7 +42,7 @@ const Header = () => {
           >
             {menuOpen ? <X className='w-4 h-4' /> : <Menu className='w-4 h-4' />} 
           </button>
-          {/* Menu dropdown - FORA do container interno */}
+          {/* Menu dropdown */}
           {menuOpen && (
             <div className="absolute right-0 top-full mt-2 w-72 bg-white border border-gray-200 rounded-lg shadow-lg z-50"> 
               <nav className="px-4 py-4 space-y-2">
