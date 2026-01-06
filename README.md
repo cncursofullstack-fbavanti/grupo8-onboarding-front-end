@@ -6,44 +6,59 @@ Interface web para acompanhamento do processo de onboarding de colaboradores em 
 
 Frontend do sistema desenvolvido como trabalho final do curso de Fullstack, que auxilia empresas de TI a gerenciar e acompanhar o onboarding de novos colaboradores do time técnico (Desenvolvedores, QAs e Product Owners).
 
+Este frontend consome uma API REST desenvolvida em Node.js para persistência e gerenciamento de dados.
+
 ## 🎯 Funcionalidades
 
 ### Perfil Gestor
 - Visualizar dashboard com todos os colaboradores em onboarding
 - Acompanhar progresso individual e geral do time
 - Visualizar detalhes do onboarding de cada colaborador
-- Cadastrar novos colaboradores (funcionalidade temporária - dados em memória)
+- Cadastrar novos colaboradores com aplicação automática de templates
 - Menu de navegação responsivo
 - Proteção de rotas (acesso exclusivo para gestores)
 
 ### Perfil Colaborador (Dev, QA, PO)
 - Visualizar lista de tarefas do próprio onboarding
-- Marcar tarefas como concluídas ou pendentes
-- Acompanhar progresso pessoal
+- Marcar tarefas como concluídas ou pendentes (persistência via API)
+- Acompanhar progresso pessoal em tempo real
 - Tratamento de lista vazia quando não há tarefas atribuídas
 - Proteção de rotas (acesso exclusivo para colaboradores)
 
 ### Funcionalidades Gerais
-- Sistema de autenticação com persistência via localStorage
+- Sistema de autenticação integrado com API
+- Persistência de sessão via localStorage
 - Menu de navegação dropdown com ícones
 - Página 404 para rotas inexistentes
 - Avatares com fallback para iniciais do nome
 - Design responsivo e temático (cores dos X-Men)
+- Loading states durante requisições à API
+- Tratamento de erros de conexão
 
 ## 🛠️ Tecnologias Utilizadas
 
-- React
+- React 18
 - Tailwind CSS
-- React Router DOM
+- React Router DOM 6
 - Lucide React (ícones)
 - JavaScript (ES6+)
-- HTML5
-- CSS3
-- LocalStorage (persistência de sessão)
+- Fetch API (requisições HTTP)
+- LocalStorage (sessão do usuário)
+- Vite (build tool)
 
 ## 🚀 Como Executar
 
+### Pré-requisitos
+- Node.js instalado (versão 16+)
+- Backend rodando em `http://localhost:3000` ([ver repositório do backend](link-do-repo-backend))
+
+### Instalação
+
 ```bash
+# Clonar o repositório
+git clone [url-do-repositorio]
+cd frontend
+
 # Instalar dependências
 npm install
 
@@ -52,7 +67,33 @@ npm run dev
 
 # Build para produção
 npm run build
+
+# Preview do build de produção
+npm run preview
 ```
+
+O frontend estará disponível em `http://localhost:5173`
+
+## 🔗 Integração com Backend
+
+O frontend consome a API REST do backend através do serviço `src/services/api.js`.
+
+**Configuração da URL da API:**
+Por padrão, a URL está configurada para `http://localhost:3000/api`. Se precisar alterar:
+
+```javascript
+// src/services/api.js
+const API_URL = 'http://localhost:3000/api'; // Altere aqui se necessário
+```
+
+**Endpoints consumidos:**
+- `POST /api/auth/login` - Autenticação
+- `GET /api/users` - Lista usuários
+- `GET /api/users/:id` - Busca usuário
+- `POST /api/users` - Cria colaborador
+- `GET /api/tasks` - Lista tarefas
+- `GET /api/tasks?collaborator_id=:id` - Tarefas por colaborador
+- `PATCH /api/tasks/:id` - Atualiza status da tarefa
 
 ## 🔐 Usuários para Teste
 
@@ -81,10 +122,10 @@ src/
 │   ├── Input.jsx
 │   ├── Progress.jsx
 │   └── Avatar.jsx
+├── services/
+│   └── api.js
 ├── utils/
 │   └── auth.js
-├── data/
-│   └── mockData.js
 ├── assets/
 │   └── imgs/
 │       ├── SchoolLogo.png
@@ -108,123 +149,110 @@ src/
 - Menu de navegação responsivo com dropdown
 - Exibição de avatar e nome do usuário
 - Opções contextuais baseadas no tipo de usuário (gestor/colaborador)
-- Botão de logout
+- Botão de logout com limpeza de sessão
 - Proteção automática de rotas
 
 ### Input
 - Componente reutilizável de input com label
 - Suporta diferentes tipos (email, password, text)
+- Estados de loading/disabled
 - Validação HTML5 integrada
 - Estilização consistente com Tailwind
 
 ### Progress
-- Barra de progresso visual
+- Barra de progresso visual animada
 - Suporta diferentes tamanhos (small, large)
-- Tratamento de valores inválidos (NaN)
-- Mensagem customizada quando não há tarefas
+- Tratamento de valores inválidos (null, NaN)
+- Mensagem customizada quando não há tarefas atribuídas
+- Formatação de porcentagem automática
 
 ## 📄 Páginas
 
 ### Login
-- Formulário de autenticação
+- Autenticação via API
 - Validação de credenciais
 - Redirecionamento automático se já logado
-- Diferencia entre gestor e colaborador
+- Diferenciação entre gestor e colaborador
 - Mensagens de erro estilizadas
-- Persistência de sessão
+- Loading state durante login
 
 ### Dashboard Gestor
+- Carregamento de dados via API
 - Progresso geral do time (visual destacado)
-- Grid responsivo de colaboradores (2 colunas desktop, 1 coluna mobile)
+- Grid responsivo de colaboradores
 - Cards com avatar, nome, papel, email e progresso individual
 - Botão para visualizar detalhes de cada colaborador
-- Acesso via menu ao cadastro de colaboradores
+- Atualização automática ao cadastrar novos colaboradores
 
 ### Cadastro de Colaborador
-- Formulário com nome, email, senha e papel
+- Formulário integrado com API
 - Validação de campos obrigatórios
+- Verificação de email duplicado (backend)
 - Seleção de papel (Dev, QA, PO)
-- Aplicação automática de template de tarefas (temporário - dados em memória)
-- Botões de cancelar e cadastrar
+- Aplicação automática de template de tarefas
+- Loading state durante cadastro
+- Tratamento de erros de criação
 
 ### Detalhes do Onboarding
-- Visualização completa das tarefas do colaborador
-- Card com informações do colaborador (avatar, nome, papel, email)
+- Visualização completa das tarefas via API
+- Card com informações do colaborador
 - Barra de progresso detalhada
 - Lista de tarefas com status visual
-- Indicadores coloridos (amarelo = concluída, cinza = pendente)
+- Indicadores coloridos por status
 - Botão voltar para dashboard
 
 ### Tarefas do Colaborador
-- Lista interativa de tarefas próprias
+- Lista interativa de tarefas carregadas da API
 - Checkboxes para marcar conclusão
-- Barra de progresso pessoal
 - Atualização em tempo real do progresso
+- Persistência de mudanças via API
 - Tratamento especial para lista vazia
-- Visual responsivo e intuitivo
+- Loading state durante carregamento
 
 ### Página 404
 - Design amigável para rotas inexistentes
 - Botão para retornar à página inicial
 - Visual consistente com o tema do sistema
 
+## 🔒 Segurança e Autenticação
+
+### Frontend
+- Proteção de rotas com `useEffect` e redirecionamento
+- Funções utilitárias: `requireManager()`, `requireCollaborator()`
+- Armazenamento seguro de sessão via localStorage
+- Limpeza de dados sensíveis ao logout
+
+### Integração com Backend
+- Headers customizados com tipo de usuário
+- Tratamento de respostas 401 (não autorizado) e 403 (acesso negado)
+- Validação de permissões no servidor
+
 ## 📝 Regras de Negócio
 
 1. Gestor tem acesso exclusivo ao dashboard, cadastro e visualização de colaboradores
 2. Colaborador tem acesso exclusivo à própria lista de tarefas
 3. Templates de 7 tarefas são aplicados automaticamente por papel (Dev/QA/PO)
-4. Sistema mantém sessão via localStorage (persiste ao recarregar)
+4. Sistema mantém sessão via localStorage
 5. Logout limpa dados da sessão e redireciona para login
 6. Proteção de rotas impede acessos não autorizados
-7. Dados de cadastro são temporários (memória) - serão persistidos com backend
+7. Dados são persistidos via API REST no backend
+8. Mudanças de status de tarefas são salvas imediatamente
+9. Novos colaboradores aparecem automaticamente no dashboard
 
-## 🔄 Fluxo de Autenticação
+## 🔄 Fluxo de Dados
 
-1. Usuário acessa a aplicação
-2. Se já logado (localStorage), redireciona automaticamente para rota apropriada
-3. Se não logado, exibe tela de login
-4. Após login bem-sucedido:
-   - Dados do usuário salvos no localStorage
-   - Redirecionamento baseado no tipo (manager → /manager/dashboard, collaborator → /collaborator/tasks)
-5. Proteção ativa em todas as rotas
-6. Logout remove dados e retorna ao login
-
-## 🔒 Segurança e Proteção de Rotas
-
-- Função `requireManager()` protege rotas de gestores
-- Função `requireCollaborator()` protege rotas de colaboradores
-- Função `getLoggedUser()` centraliza acesso aos dados do usuário
-- Redirecionamento automático para login em caso de acesso não autorizado
-- Header verifica autenticação antes de renderizar
-
-## 🗂️ Estrutura de Dados (Mock)
-
-### Users
-```javascript
-{
-  id: number,
-  name: string,
-  email: string,
-  password: string,
-  type: "manager" | "collaborator",
-  role?: "dev" | "qa" | "po",
-  avatar: string
-}
+```
+Usuário → Frontend → API Service → Backend API → JSON File
+                ↓                        ↓
+            localStorage            data.json
 ```
 
-### Tasks
-```javascript
-{
-  id: number,
-  collaborator_id: number,
-  template_task_id: number,
-  title: string,
-  status: "pending" | "completed"
-}
-```
-
-### Templates
-Organizados por papel (dev, qa, po) com 7 tarefas específicas cada
+1. Usuário interage com interface React
+2. Componente chama função do `api.js`
+3. Requisição HTTP para backend
+4. Backend processa e retorna dados
+5. Frontend atualiza estado e renderiza
+6. Sessão mantida em localStorage
 
 ## 🎨 Design System
 
@@ -233,6 +261,7 @@ Organizados por papel (dev, qa, po) com 7 tarefas específicas cada
 - **Cinza**: `stone-200` - Background geral
 - **Branco**: Cards e containers
 - **Vermelho**: `red-600` - Botão de logout e alertas
+- **Verde**: `green-600` - Status de conclusão
 
 ### Tipografia
 - Títulos: `text-3xl`, `font-bold`
@@ -240,11 +269,11 @@ Organizados por papel (dev, qa, po) com 7 tarefas específicas cada
 - Corpo: `text-base`, `text-sm`
 - Labels: `text-xs`, `font-medium`
 
-### Componentes Visuais
-- Cards com `rounded-lg`, `shadow-md`, `hover:shadow-lg`
-- Botões com estados hover e focus
-- Transições suaves em elementos interativos
-- Borders consistentes com `border-gray-300`
+### Estados de Interface
+- **Loading**: Spinners e mensagens "Carregando..."
+- **Erro**: Cards vermelhos com ícone de alerta
+- **Sucesso**: Transições suaves e feedback visual
+- **Vazio**: Mensagens amigáveis para estados vazios
 
 ## 👥 Tipos de Usuário
 
@@ -254,14 +283,13 @@ Organizados por papel (dev, qa, po) com 7 tarefas específicas cada
   - **QA** (Quality Assurance): 7 tarefas focadas em testes
   - **PO** (Product Owner): 7 tarefas focadas em produto e stakeholders
 
-## ⚠️ Limitações Conhecidas
+## 🐛 Tratamento de Erros
 
-- Dados de cadastro são temporários (memória) e são perdidos ao recarregar a página
-- Avatares dos novos colaboradores cadastrados ficam vazios (mostram inicial)
-- Alterações no status das tarefas não persistem ao recarregar
-- Autenticação simplificada sem criptografia (ambiente acadêmico)
-
-Estas limitações serão resolvidas com a implementação do backend.
+- Erros de conexão: Mensagens amigáveis
+- Erros 401/403: Redirecionamento para login
+- Erros 404: Página customizada
+- Erros de validação: Feedback inline nos formulários
+- Console.log detalhado para debugging
 
 ## 🎓 Contexto Acadêmico
 
@@ -270,23 +298,38 @@ Projeto desenvolvido como avaliação final do curso de Fullstack, aplicando os 
 - Estilização avançada com Tailwind CSS
 - Gerenciamento de estado com Hooks (useState, useEffect)
 - Roteamento de páginas com React Router DOM
+- Consumo de APIs REST com Fetch
 - Persistência de dados com LocalStorage
 - Proteção de rotas e controle de acesso
 - Componentização e reutilização de código
 - Design responsivo e acessível
-- Integração de bibliotecas de ícones (Lucide React)
+- Integração frontend-backend
 
 ## 📚 Aprendizados Técnicos
 
 - Estruturação de projetos React escaláveis
 - Padrões de componentes reutilizáveis
-- Gerenciamento de estado local e sessão
+- Gerenciamento de estado local e global
 - Implementação de fluxos de autenticação
+- Consumo de APIs REST e tratamento de respostas assíncronas
 - Proteção e validação de rotas
 - Design de interfaces intuitivas
-- Tratamento de casos extremos (listas vazias, dados inválidos)
+- Tratamento de casos extremos (listas vazias, dados inválidos, erros de rede)
 - Uso efetivo de Tailwind CSS para estilização rápida
-- Trabalho com mock data estruturado
+- Integração frontend-backend completa
+- Loading states e feedback visual ao usuário
+
+## 🔧 Scripts Disponíveis
+
+- `npm run dev` - Inicia servidor de desenvolvimento
+- `npm run build` - Cria build de produção
+
+## 📝 Notas Importantes
+
+- **Backend obrigatório**: O frontend precisa do backend rodando para funcionar
+- **CORS**: O backend deve estar configurado para aceitar requisições do frontend
+- **LocalStorage**: Sessão é mantida apenas no navegador atual
+- **Segurança**: Implementação básica adequada para ambiente acadêmico
 
 ---
 
