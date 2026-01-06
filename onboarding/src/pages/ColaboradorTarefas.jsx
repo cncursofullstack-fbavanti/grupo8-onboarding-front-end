@@ -1,35 +1,73 @@
-import React, { useState, useEffect } from "react";
+import { useState, useEffect } from "react";
+import { useNavigate } from "react-router-dom";
 import Header from "../components/Header";
 import Progress from "../components/Progress";
 import { getLoggedUser } from "../utils/auth";
-import { useNavigate } from "react-router-dom";
-import data from "../data/mockData"
+import { api } from '../services/api'; 
 
 const ColaboradorTarefas = () => {
   const navigate = useNavigate();
   const loggedUser = getLoggedUser();
-  const [tasks, setTasks] = useState(
-    data.tasks.filter(t => t.collaborator_id === loggedUser?.id)
-  );
+  const [tasks, setTasks] = useState([]); 
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     if (!loggedUser) {
       navigate('/');
+      return;
+    } else {
+      loadTasks(); 
     }
-  }, [loggedUser, navigate]);
+  }, []);
 
-  const toggleTask = (id) => {
-    setTasks(tasks.map(t => 
-      t.id === id 
-        ? { ...t, status: t.status === "completed" ? "pending" : "completed" }
-        : t
-    ));
+  const loadTasks = async () => {
+    try {
+      setLoading(true);
+      const tasksData = await api.getTasks(loggedUser.id);
+      setTasks(tasksData);
+    } catch (error) {
+      console.error('Erro ao carregar tarefas:', error);
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  
+  const toggleTask = async (id) => {
+    try {
+      const task = tasks.find(t => t.id === id);
+      const newStatus = task.status === "completed" ? "pending" : "completed";
+      
+      // Atualiza no backend
+      await api.updateTask(id, newStatus);
+      
+      // Atualiza no estado local
+      setTasks(tasks.map(t => 
+        t.id === id 
+          ? { ...t, status: newStatus }
+          : t
+      ));
+    } catch (error) {
+      console.error('Erro ao atualizar tarefa:', error);
+      alert('Erro ao atualizar tarefa');
+    }
   }
 
   const progress = () => {
     if (tasks.length === 0) return 0;
     const completed = tasks.filter(t => t.status === "completed");
     return completed.length / tasks.length;
+  }
+
+  if (loading) {
+    return (
+      <>
+        <Header />
+        <div className="min-h-screen bg-stone-200 p-6 flex items-center justify-center">
+          <p className="text-gray-600 text-lg">Carregando tarefas...</p>
+        </div>
+      </>
+    );
   }
 
   return (

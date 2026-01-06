@@ -1,30 +1,76 @@
-import { useEffect } from "react";
+import { useState, useEffect } from "react"; // NOVO: adiciona useState
+import { useParams, useNavigate } from "react-router-dom";
 import Header from "../components/Header";
 import Progress from "../components/Progress";
-import data from "../data/mockData"
-import { useParams, useNavigate } from "react-router-dom";
 import { requireManager } from "../utils/auth";
-import Avatar from "../components/Avatar";
+import { api } from '../services/api'; // NOVO
+import Avatar from '../components/Avatar';
 
 const DetalhesOnboarding = () => {
-  const params = useParams();
-  const collab = data.users.find(u => u.id == params.id);
-  const tasks = data.tasks.filter(t => t.collaborator_id === collab.id);
+  const { id } = useParams();
   const navigate = useNavigate();
+  
+  const [collaborator, setCollaborator] = useState(null); // NOVO
+  const [tasks, setTasks] = useState([]); // NOVO
+  const [loading, setLoading] = useState(true); // NOVO
 
   useEffect(() => {
     requireManager(navigate);
-  }, [navigate]);
-  
+    loadData();
+  }, []); // eslint-disable-line react-hooks/exhaustive-deps
+
+  // NOVO: Função para carregar dados
+  const loadData = async () => {
+    try {
+      setLoading(true);
+      const [userData, tasksData] = await Promise.all([
+        api.getUser(id),
+        api.getTasks(id)
+      ]);
+      
+      setCollaborator(userData);
+      setTasks(tasksData);
+    } catch (error) {
+      console.error('Erro ao carregar dados:', error);
+    } finally {
+      setLoading(false);
+    }
+  };
+
   const progress = () => {
+    if (tasks.length === 0) return null; // Muda de 0 para null
     const completed = tasks.filter(t => t.status === "completed");
     return completed.length / tasks.length;
   }
-  
+
   const backToDashboard = () => {
     navigate('/manager/dashboard');
   }
-  
+
+  // NOVO: Loading state
+  if (loading) {
+    return (
+      <>
+        <Header />
+        <div className="min-h-screen bg-stone-200 p-6 flex items-center justify-center">
+          <p className="text-gray-600 text-lg">Carregando...</p>
+        </div>
+      </>
+    );
+  }
+
+  // NOVO: Se não encontrou colaborador
+  if (!collaborator) {
+    return (
+      <>
+        <Header />
+        <div className="min-h-screen bg-stone-200 p-6 flex items-center justify-center">
+          <p className="text-gray-600 text-lg">Colaborador não encontrado</p>
+        </div>
+      </>
+    );
+  }
+
   return (
     <>
       <Header />
@@ -41,14 +87,14 @@ const DetalhesOnboarding = () => {
           {/* Header do Colaborador com Progresso */}
           <div className="bg-white rounded-lg shadow-md hover:shadow-lg transition-shadow mb-6">
             <div className="flex items-center gap-4">
-              <Avatar src={collab.avatar} name={collab.name} size="card" />
+              <Avatar src={collaborator.avatar} name={collaborator.name} size="card" />
               <div className="pr-6 flex-1">
                 <h3 className="text-lg font-semibold text-gray-800">
-                  {collab.name} <span className='text-gray-400 text-sm uppercase'>{collab.role}</span>
+                  {collaborator.name} <span className='text-gray-400 text-sm uppercase'>{collaborator.role}</span>
                 </h3>
                 <ul>
                   <li className="text-sm text-gray-500">
-                    {collab.email}
+                    {collaborator.email}
                   </li>
                 </ul>
                 <Progress percentage={progress()} />

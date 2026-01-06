@@ -1,52 +1,87 @@
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import Header from "../components/Header";
-import data from "../data/mockData";
 import Progress from "../components/Progress";
-import { requireManager } from '../utils/auth';
+import { requireManager } from "../utils/auth";
+import { api } from '../services/api';
 import Avatar from '../components/Avatar';
 
 const GestorDashBoard = () => {
-  const team = data.users.filter((u) => u.type === "collaborator"); 
-  const tasks = data.tasks; 
+  const [team, setTeam] = useState([]);
+  const [tasks, setTasks] = useState([]);
+  const [loading, setLoading] = useState(true);
   const navigate = useNavigate();
 
   useEffect(() => {
-      requireManager(navigate);
-    }, [navigate]);
-  
+    requireManager(navigate);
+    loadData();
+  }, []); // eslint-disable-line react-hooks/exhaustive-deps
+
+  // Função para carregar dados
+  const loadData = async () => {
+    try {
+      setLoading(true);
+      const [usersData, tasksData] = await Promise.all([
+        api.getUsers(),
+        api.getTasks()
+      ]);
+      
+      const collaborators = usersData.filter(u => u.type === "collaborator");
+      setTeam(collaborators);
+      setTasks(tasksData);
+    } catch (error) {
+      console.error('Erro ao carregar dados:', error);
+    } finally {
+      setLoading(false);
+    }
+  };
+
   const progress = (user) => {
-    const uTasks = tasks.filter((task) => user.id === task.collaborator_id);
+    const uTasks = tasks.filter((task) => task.collaborator_id === user.id);
+    if (uTasks.length === 0) return null; // Muda de 0 para null
     const completed = uTasks.filter((task) => task.status === "completed");
     return completed.length / uTasks.length;
   }
-  
+
   const progressoGeral = () => {
-    const totalTasks = team.reduce((acc, collaborator) => {
+    const totalTarefas = team.reduce((acc, collaborator) => {
       const uTasks = tasks.filter(t => t.collaborator_id === collaborator.id);
       return acc + uTasks.length;
     }, 0);
     
-    const finishedTasks = team.reduce((acc, collaborator) => {
+    if (totalTarefas === 0) return 0;
+    
+    const tarefasConcluidas = team.reduce((acc, collaborator) => {
       const uTasks = tasks.filter(t => t.collaborator_id === collaborator.id);
       const completed = uTasks.filter(t => t.status === "completed");
       return acc + completed.length;
     }, 0);
     
-    return finishedTasks / totalTasks;
+    return tarefasConcluidas / totalTarefas;
   }
-  
+
   const verDetalhes = (id) => {
-    navigate(`/manager/onboarding/${id}`); 
+    navigate(`/manager/onboarding/${id}`);
   }
-  
+
+  if (loading) {
+    return (
+      <>
+        <Header />
+        <div className="min-h-screen bg-stone-200 p-6 flex items-center justify-center">
+          <p className="text-gray-600 text-lg">Carregando...</p>
+        </div>
+      </>
+    );
+  }
+
   return (
     <>
       <Header />
       <div className="min-h-screen bg-stone-200 p-6">
         <div className="max-w-7xl mx-auto">
           <h2 className="text-3xl font-bold text-gray-800 mb-6">
-            Onboarding do time
+            Collaborators Onboarding
           </h2>
           
           {/* Progresso Geral */}
@@ -72,7 +107,7 @@ const GestorDashBoard = () => {
                   <Avatar src={collaborator.avatar} name={collaborator.name} size="card" />
                   <div className="pr-6 flex-1">
                     <h3 className="text-lg font-semibold text-gray-800">
-                      {collaborator.name} <span className='text-gray-400 text-sm uppercase'>{collaborator.role}</span> 
+                      {collaborator.name} <span className='text-gray-400 text-sm uppercase'>{collaborator.role}</span>
                     </h3>
                     <ul>
                       <li className="text-sm text-gray-500">
